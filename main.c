@@ -32,12 +32,6 @@ int search(struct book* cat, int len, char* id);
 // Main program
 int main()
 {
-    /*TODO:
-     * Search function:
-     * --> print the book directly and return the number of books found (change of the currently implemented function necessary)
-     * --> print the return value in the switch case
-    */
-
     int choice;
     bool run = true;
     int i = 0;
@@ -80,8 +74,10 @@ int main()
 
                 printf ("\nPublisher: ");
                 scanf ("%s", catalog[i].publisher);
+
                 bookcount++;
                 break;
+
             case 2:
                 for(i = 0; i < bookcount; i++)
                 {
@@ -93,33 +89,25 @@ int main()
                     printf("Publisher: %s\n\n", catalog[i].publisher);
                 }
                 break;
+
             case 3:
                 printf ("Please enter the name of the author you are looking for: ");
                 scanf ("%s", &search_term);
 
-                int result = search(catalog, 200, &search_term);
+                int results = search(catalog, 200, &search_term);
 
-                if (result != 0)
-                {
-                    printf("\nResult found!\n");
-                    printf("Booknumber: %d\n", catalog[result].book_num);
-                    printf("Author: %s\n", catalog[result].author);
-                    printf("Title: %s\n", catalog[result].title);
-                    printf("Release year: %d\n", catalog[result].release_year);
-                    printf("Publisher: %s\n", catalog[result].publisher);
-                }
-                else
-                {
-                    printf("\nNo result!\n");
-                }
+                printf("\nSearch results: %i\n", results);
                 break;
+
             case 4:
                 printf("There are currently %d books in the library!\n", bookcount);
                 break;
+
             case 5:
                 run = false;
                 printf("Thank you for using my program!\nGoodbye!");
                 break;
+
             default:
                 printf("Please make sure to enter a number from 1 - 5!\n");
                 break;
@@ -145,17 +133,26 @@ int main()
 //********************************************************************
 int search(struct book* cat, int len, char* id)
 {
-    bool book_found = false;
+    bool array_passed = false;
+    int results = 0;
 
-    while (!book_found)
+    while (!array_passed)
     {
         for (int i = 0; i < len; ++i)
         {
             if (id == cat[i].author)
             {
-                book_found = true;
-                return i;
+                printf("\nResult found!\n");
+                printf("Booknumber: %d\n", cat[i].book_num);
+                printf("Author: %s\n", cat[i].author);
+                printf("Title: %s\n", cat[i].title);
+                printf("Release year: %d\n", cat[i].release_year);
+                printf("Publisher: %s\n", cat[i].publisher);
+
+                results++;
             }
         }
+        array_passed = true;
     }
+    return results;
 }
